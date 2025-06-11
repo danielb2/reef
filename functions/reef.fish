@@ -7,20 +7,22 @@ function reef
             for coral in $__fish_config_dir/corals/*/*
                 echo (string replace -r "^$__fish_config_dir/corals/" "" $coral)
             end
-        case install
+        case install add
             for repo in $argv
-                set -l dest (string replace -r '.*/([^/]+)$' '$1' $repo)
-                set -l path "$__fish_config_dir/corals/(string split / $repo[-1])"
+                set -l dest (string replace -r '.*://.*?\/(.*)' '$1' $repo)
+                echo repo: $repo
+                echo dest: $dest
 
-                if test -d $path
-                    echo "Coral already exists: $path"
+                if test -d $dest
+                    echo "Coral already exists: $dest"
                 else
-                    git clone $repo $path || echo "Failed to clone $repo"
+                    git clone --depth 1 --single-branch $repo $dest || echo "Failed to clone $repo"
                 end
             end
 
         case rm remove
             for coral in $argv
+                set coral (dirname $coral)
                 set -l path "$__fish_config_dir/corals/$coral"
                 if test -d $path
                     command rm -rf $path

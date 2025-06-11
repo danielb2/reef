@@ -10,3 +10,8 @@ for conf in (path resolve $__fish_config_dir/corals/**/conf.d/*.fish)
         # echo Loading $base
     end
 end
+#
+# Source all coral complete/*.fish files
+for complete in (path resolve $__fish_config_dir/corals/**/completions/*.fish)
+    source $complete
+end
