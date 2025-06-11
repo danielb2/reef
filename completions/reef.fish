@@ -20,6 +20,10 @@ complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
     -a "up update" \
     -d "update coral(s)"
 
+complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
+    -a version \
+    -d "display reef version"
+
 complete -c reef -n "__fish_seen_subcommand_from install" -a "" \
     -d "Git URL or user/repo to install"
 
@@ -28,4 +32,4 @@ complete -c reef -f -n "__fish_seen_subcommand_from rm remove up update" \
     -d "Installed coral"
 
 complete -c reef -f -d 'list installed corals' -a 'ls list' -n "not __fish_seen_subcommand_from $__reef_commands"
-complete -c reef -f -n '__fish_seen_subcommand_from ls list'
+complete -c reef -f -n '__fish_seen_subcommand_from ls list version'

@@ -3,6 +3,8 @@ function reef -d 'package manager for fish'
     set -e argv[1]
 
     switch $cmd
+        case version
+            echo reef 1.0.0
         case list ls
             for coral in $__fish_config_dir/corals/*/*
                 echo (string replace -r "^$__fish_config_dir/corals/" "" $coral)
@@ -39,6 +41,16 @@ function reef -d 'package manager for fish'
         case help
             reef splash
             reef_show_help reef
+        case prompt
+            path is $__fish_config_dir/functions/fish_prompt.fish
+            and cp $__fish_config_dir/functions/fish_prompt.fish{,.bak}
+            function fish_prompt
+            end
+            function fish_right_prompt
+            end
+            source $__fish_config_dir/corals/**/reef/functions/fish_prompt.fish
+            funcsave fish_prompt
+            funcsave fish_right_prompt 2>/dev/null
         case rm remove
             for coral in $argv
                 set -l path "$__fish_config_dir/corals/$coral"
