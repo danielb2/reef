@@ -22,17 +22,17 @@ function reef -d 'package manager for fish'
                     git clone --depth 1 --single-branch $repo $path || echo "Failed to clone $repo"
                 end
             end
-
+            ref reload
         case reload
             for i in $__fish_config_dir/corals/**/reef/*/reef.fish
                 source $i
             end
-            echo 🐟 reloaded
+            echo 🪸🐟 reloaded
         case init
             reef reload
             set -l reef_path $__fish_config_dir/corals/**/reef
             echo "source $reef_path/conf.d/reef.fish" >"$__fish_config_dir/conf.d/reef.fish"
-            echo 🐟 initialized - ready to go
+            echo 🪸🐟 initialized - ready to go
             reef splash
         case splash
             command cat (dirname (status filename))/../splash
@@ -44,12 +44,12 @@ function reef -d 'package manager for fish'
                 set -l path "$__fish_config_dir/corals/$coral"
                 if test -d $path
                     command rm -rf $path
-                    echo "Removed coral: $coral"
+                    echo "🪸🐟 removed coral: $coral"
                 else
-                    echo "Coral not found: $coral"
+                    echo "🪸🐟 coral not found: $coral"
+                    return 1
                 end
             end
-
         case up update
             set -l corals $argv
             if not [ $argv[1] ]
@@ -61,7 +61,9 @@ function reef -d 'package manager for fish'
                 printf "%-30s " $name
                 git -C "$__fish_config_dir/corals/"$coral pull || echo "Failed to update $name"
             end
+            reef reload
         case '*'
             reef help
+            return 1
     end
 end
