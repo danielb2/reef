@@ -1,4 +1,4 @@
-function reef
+function reef -d 'package manager for fish'
     set -l cmd $argv[1]
     set -e argv[1]
 
@@ -48,6 +48,13 @@ function reef
                 end
             end
 
+            if not [ $argv[1] ]
+                for coral in $__fish_config_dir/corals/*/*
+                    set name (string replace -r "^$__fish_config_dir/corals/" "" $coral)
+                    printf "%-30s " $name
+                    git -C $coral pull || echo "Failed to update $name"
+                end
+            end
         case '*'
             reef help
     end

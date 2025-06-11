@@ -9,6 +9,14 @@ complete -c reef -n "not __fish_seen_subcommand_from install add rm remove up up
     -a "install add rm remove up update list" \
     -d "install, remove, update, list corals"
 
+complete -c reef -n "not __fish_seen_subcommand_from install add rm remove up update list" -f \
+    -a add \
+    -d "add corals"
+
+complete -c reef -n "not __fish_seen_subcommand_from install add rm remove up update list" -f \
+    -a "rm remove" \
+    -d "remove corals"
+
 complete -c reef -n "__fish_seen_subcommand_from install" -a "" \
     -d "Git URL or user/repo to install"
 
