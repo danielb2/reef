@@ -27,10 +27,12 @@ function reef -d 'package manager for fish'
             for i in $__fish_config_dir/corals/**/reef/*/reef.fish
                 source $i
             end
-            echo reloaded
+            echo 🐟 reloaded
         case init
+            reef reload
             set -l reef_path $__fish_config_dir/corals/**/reef
             echo "source $reef_path/conf.d/reef.fish" >"$__fish_config_dir/conf.d/reef.fish"
+            echo 🐟 initialized - ready to go
         case help
             command cat (dirname (status filename))/../splash
             reef_show_help reef
