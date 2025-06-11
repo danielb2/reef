@@ -7,10 +7,9 @@ for conf in (path resolve $__fish_config_dir/corals/*/*/conf.d/*.fish)
     set base (basename $conf)
     if [ $base != "reef.fish" ]
         source $conf
-        # echo Loading $base
     end
 end
-#
+
 # Source all coral complete/*.fish files
 for complete in (path resolve $__fish_config_dir/corals/*/*/completions/*.fish)
     source $complete
