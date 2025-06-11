@@ -1,3 +1,5 @@
+```plaintext
+                __
  _ __ ___  ___ / _|
 | '__/ _ \/ _ \ |_
 | | |  __/  __/  _|
@@ -9,4 +11,4 @@ Subcommands:
   ls/list       list installed corals
   rm/remove     remove corals
   up/update     update coral(s)
-
+```
