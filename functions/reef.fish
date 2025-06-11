@@ -23,6 +23,9 @@ function reef
                 end
             end
 
+        case help
+            command cat (dirname (status filename))/../splash
+            reef_show_help reef
         case rm remove
             for coral in $argv
                 set coral (dirname $coral)
@@ -46,6 +49,6 @@ function reef
             end
 
         case '*'
-            echo "Usage: reef [install|rm|up] <coral>..."
+            reef help
     end
 end
