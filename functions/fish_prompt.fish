@@ -1,3 +1,4 @@
+# Daniel Bretoi 2018
 function fish_prompt
 
     set -l __last_command_exit_status $status
@@ -42,4 +43,28 @@ function fish_prompt
     # second line of prompt
     echo -n $path$prompt_symbol
     set_color normal
+end
+
+function format_duration
+    set -l SEC 1000
+    set -l MIN (math 60 x $SEC)
+    set -l HOUR (math 60 x $MIN)
+    set -l DAY (math 24 x $HOUR)
+
+    set -l DURATION $argv[1]
+    [ "$DURATION" ]; or set -l DURATION $cmd_duration
+
+    set -l num_days (math "floor($DURATION / $DAY)")
+    set -l num_hours (math "floor($DURATION % $DAY / $HOUR)")
+    set -l num_mins (math "floor($DURATION % $HOUR / $MIN)")
+    set -l num_secs (math "floor(($DURATION % $MIN) / $SEC)")
+    set -l num_msecs (math "round(($DURATION % $SEC) / 10)")
+
+    set -l time_str (string join " " \
+        (test $num_days -gt 0; and echo "$num_days"d) \
+        (test $num_hours -gt 0; and echo "$num_hours"h) \
+        (test $num_mins -gt 0; and echo "$num_mins"m))
+
+    set time_str "$time_str$num_secs."(printf "%02d" $num_msecs)"s"
+    echo $time_str
 end
