@@ -28,7 +28,6 @@ function reef -d 'package manager for fish'
             reef_show_help reef
         case rm remove
             for coral in $argv
-                set coral (dirname $coral)
                 set -l path "$__fish_config_dir/corals/$coral"
                 if test -d $path
                     command rm -rf $path
@@ -39,21 +38,15 @@ function reef -d 'package manager for fish'
             end
 
         case up update
-            for coral in $argv
-                set -l path "$__fish_config_dir/corals/$coral"
-                if test -d $path
-                    git -C $path pull || echo "Failed to update $coral"
-                else
-                    echo "Coral not installed: $coral"
-                end
+            set -l corals $argv
+            if not [ $argv[1] ]
+                set corals $__fish_config_dir/corals/*/*
             end
 
-            if not [ $argv[1] ]
-                for coral in $__fish_config_dir/corals/*/*
-                    set name (string replace -r "^$__fish_config_dir/corals/" "" $coral)
-                    printf "%-30s " $name
-                    git -C $coral pull || echo "Failed to update $name"
-                end
+            for coral in $corals
+                set name (string replace -r "^$__fish_config_dir/corals/" "" $coral)
+                printf "%-30s " $name
+                git -C "$__fish_config_dir/corals/"$coral pull || echo "Failed to update $name"
             end
         case '*'
             reef help
