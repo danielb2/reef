@@ -10,13 +10,16 @@ function reef
         case install add
             for repo in $argv
                 set -l dest (string replace -r '.*://.*?\/(.*)' '$1' $repo)
-                echo repo: $repo
-                echo dest: $dest
+                set path $__fish_config_dir/corals/$dest
 
-                if test -d $dest
+                if ! [ (string match -r 'https?://git' $repo) ]
+                    set repo https://github.com/$repo
+                end
+
+                if test -d $path
                     echo "Coral already exists: $dest"
                 else
-                    git clone --depth 1 --single-branch $repo $dest || echo "Failed to clone $repo"
+                    git clone --depth 1 --single-branch $repo $path || echo "Failed to clone $repo"
                 end
             end
 
