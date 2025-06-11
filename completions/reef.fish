@@ -4,18 +4,21 @@ function __reef_list_corals
     end
 end
 
+set -l __reef_commands install add rm remove up update list
+
 complete -e reef
-complete -c reef -n "not __fish_seen_subcommand_from install add rm remove up update list" -f \
-    -a "install add rm remove up update list" \
-    -d "install, remove, update, list corals"
 
 complete -c reef -n "not __fish_seen_subcommand_from install add rm remove up update list" -f \
-    -a add \
+    -a "add install" \
     -d "add corals"
 
-complete -c reef -n "not __fish_seen_subcommand_from install add rm remove up update list" -f \
+complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
     -a "rm remove" \
     -d "remove corals"
+
+complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
+    -a "up update" \
+    -d "update coral(s)"
 
 complete -c reef -n "__fish_seen_subcommand_from install" -a "" \
     -d "Git URL or user/repo to install"
@@ -24,5 +27,5 @@ complete -c reef -f -n "__fish_seen_subcommand_from rm remove up update" \
     -a "(__reef_list_corals)" \
     -d "Installed coral"
 
-complete -c reef -n "__fish_seen_subcommand_from list" -a "" \
-    -d "List installed corals"
+complete -c reef -f -d 'list installed corals' -a 'ls list' -n "not __fish_seen_subcommand_from $__reef_commands"
+complete -c reef -f -n '__fish_seen_subcommand_from ls list'
