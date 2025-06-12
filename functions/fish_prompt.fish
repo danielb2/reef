@@ -1,5 +1,7 @@
 # Daniel Bretoi 2018
 function fish_prompt
+    set -l __last_command_exit_status $status
+
     function format_duration
         set -l SEC 1000
         set -l MIN (math 60 x $SEC)
@@ -23,8 +25,6 @@ function fish_prompt
         set time_str "$time_str$num_secs."(printf "%02d" $num_msecs)"s"
         echo $time_str
     end
-
-    set -l __last_command_exit_status $status
 
     set -U fish_color_autosuggestion BD93F9 --bold
     set -U fish_color_command brcyan --bold
