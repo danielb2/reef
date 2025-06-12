@@ -18,7 +18,7 @@ function reef -d 'package manager for fish'
                 set -l dest (string replace -r '.*://.*?\/(.*)' '$1' $repo)
                 set path $__fish_config_dir/corals/$dest
 
-                if ! [ (string match -r 'https?://git' $repo) ]
+                if ! [ (string match -r '^https?://' $repo) ]
                     set repo https://github.com/$repo
                 end
 
