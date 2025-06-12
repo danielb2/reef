@@ -8,14 +8,27 @@
 Usage: reef <subcommand> [options]
 Subcommands:
   add/install   add corals
+  help          this beautiful help
   ls/list       list installed corals
+  prompt        use the reef supplied prompt
+  reload        reload reefs files (you probably dont need this)
   rm/remove     remove corals
+  splash        show the reef splash
   up/update     update coral(s)
-```
+  version       display reef version
 
-[toc]
+```
 
 # Install
 ```console
 curl -sL https://tinyurl.com/fish-reef | source && reef add danielb2/reef && reef init
 ```
+
+# reef
+
+To stick with a fish theme, I've chosen to go with the name reef, and to keep
+the metaphor going, plugins are called corals.
+
+I made this because while I like the simplicity of fisher, I don't like how
+everything is clobbered in the main fish folder. With this design, each plugin
+has it's own folder while still keeping things very simple.

@@ -36,6 +36,10 @@ complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
     -a reload \
     -d "reload reefs files (you probably dont need this)"
 
+complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
+    -a help \
+    -d "this beautiful help"
+
 complete -c reef -n "__fish_seen_subcommand_from install" -a "" \
     -d "Git URL or user/repo to install"
 

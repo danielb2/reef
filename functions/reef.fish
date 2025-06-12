@@ -10,6 +10,10 @@ function reef -d 'package manager for fish'
                 echo (string replace -r "^$__fish_config_dir/corals/" "" $coral)
             end
         case install add
+            if not command -sq git
+                echo 🪸🐟 (set_color red)yeah, you need to install `git` first
+                return 1
+            end
             for repo in $argv
                 set -l dest (string replace -r '.*://.*?\/(.*)' '$1' $repo)
                 set path $__fish_config_dir/corals/$dest
@@ -37,7 +41,7 @@ function reef -d 'package manager for fish'
             reef splash
         case splash
             reef_splash
-        case help
+        case "" help
             reef splash
             reef_show_help reef
         case prompt
