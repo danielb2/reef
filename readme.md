@@ -12,3 +12,8 @@ Subcommands:
   rm/remove     remove corals
   up/update     update coral(s)
 ```
+
+[toc]
+
+# Install
+`curl -sL https://tinyurl.com/fish-reef | source && reef add danielb2/reef && reef init`
