@@ -48,8 +48,8 @@ function reef -d 'package manager for fish'
             function fish_right_prompt
             end
             source $__fish_config_dir/corals/**/reef/functions/fish_prompt.fish
-            funcsave fish_prompt
-            funcsave fish_right_prompt 2>/dev/null
+            funcsave -q fish_prompt
+            funcsave -q fish_right_prompt 2>/dev/null
         case rm remove
             for coral in $argv
                 set -l path "$__fish_config_dir/corals/$coral"
