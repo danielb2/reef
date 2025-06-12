@@ -45,8 +45,11 @@ function reef -d 'package manager for fish'
             reef splash
             reef_show_help reef
         case prompt
+            set -l date (date +%F)
             path is $__fish_config_dir/functions/fish_prompt.fish
-            and cp $__fish_config_dir/functions/fish_prompt.fish{,.bak}
+            and cp $__fish_config_dir/functions/fish_prompt.fish{,-$date.bak}
+            path is $__fish_config_dir/functions/fish_right_prompt.fish
+            and cp $__fish_config_dir/functions/fish_right_prompt.fish{,-$date.bak}
             function fish_prompt
             end
             function fish_right_prompt
