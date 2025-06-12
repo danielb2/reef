@@ -65,6 +65,7 @@ function reef -d 'package manager for fish'
             set -l corals $argv
             if not [ $argv[1] ]
                 set corals $__fish_config_dir/corals/*/*
+                set corals (string replace $__fish_config_dir/corals/ '' $corals)
             end
 
             for coral in $corals
