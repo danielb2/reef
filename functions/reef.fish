@@ -24,14 +24,13 @@ function reef -d 'package manager for fish'
                     git clone --depth 1 --single-branch $repo $path || echo "Failed to clone $repo"
                 end
             end
-            ref reload
+            reef reload
         case reload
             for i in $__fish_config_dir/corals/**/reef/*/reef.fish
                 source $i
             end
             echo 🪸🐟 reloaded
         case init
-            reef reload
             set -l reef_path $__fish_config_dir/corals/**/reef
             echo "source $reef_path/conf.d/reef.fish" >"$__fish_config_dir/conf.d/reef.fish"
             echo 🪸🐟 initialized - ready to go
