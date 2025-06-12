@@ -16,4 +16,6 @@ Subcommands:
 [toc]
 
 # Install
-`curl -sL https://tinyurl.com/fish-reef | source && reef add danielb2/reef && reef init`
+```console
+curl -sL https://tinyurl.com/fish-reef | source && reef add danielb2/reef && reef init
+```
