@@ -24,6 +24,18 @@ complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
     -a version \
     -d "display reef version"
 
+complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
+    -a prompt \
+    -d "use the reef supplied prompt"
+
+complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
+    -a splash \
+    -d "show the reef splash"
+
+complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
+    -a reload \
+    -d "reload reefs files (you probably dont need this)"
+
 complete -c reef -n "__fish_seen_subcommand_from install" -a "" \
     -d "Git URL or user/repo to install"
 

@@ -57,7 +57,7 @@ function reef -d 'package manager for fish'
                     command rm -rf $path
                     echo "🪸🐟 removed coral: $coral"
                 else
-                    echo "🪸🐟 coral not found: $coral"
+                    echo 🪸🐟 (set_color red)coral not found: $coral
                     return 1
                 end
             end
@@ -76,6 +76,7 @@ function reef -d 'package manager for fish'
             reef reload
         case '*'
             reef help
+            echo 🪸🐟(set_color red) unknown command `$cmd`
             return 1
     end
 end
