@@ -36,7 +36,7 @@ function reef -d 'package manager for fish'
             echo 🪸🐟 initialized - ready to go
             reef splash
         case splash
-            command cat (dirname (status filename))/../splash
+            reef_splash
         case help
             reef splash
             reef_show_help reef
