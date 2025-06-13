@@ -32,3 +32,15 @@ the metaphor going, plugins are called corals.
 I made this because while I like the simplicity of fisher, I don't like how
 everything is clobbered in the main fish folder. With this design, each plugin
 has it's own folder while still keeping things very simple.
+
+## compatability
+
+Fisher, omf plugins, and anything following the standard `functions/`,
+`conf.d/` etc directory structre are compatible. reef will not honor any
+`init.fish` file however, although functionality can be copied into a file in
+functions.
+
+# notes
+- there's no support for themes yet
+- no dependency tree
+
