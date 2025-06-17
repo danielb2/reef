@@ -59,7 +59,8 @@ function reef -d 'package manager for fish'
             funcsave -q fish_right_prompt 2>/dev/null
         case theme
             set prompt_file $__fish_config_dir/functions/fish_prompt.fish
-            if test -f $prompt_file && ! test -L $prompt_file
+
+            if [ $argv[1] ] && test -f $prompt_file && ! test -L $prompt_file
                 echo 🪸🐟 theres a fish_prompt already. backup and delete first if you want to set a theme
                 return 1
             end
