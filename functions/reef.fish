@@ -63,15 +63,16 @@ function reef -d 'package manager for fish'
                 echo 🪸🐟 theres a fish_prompt already. backup and delete first if you want to set a theme
                 return 1
             end
+
+            # list themes
             if ! [ $argv[1] ]
-                for prompt in $__fish_config_dir/corals/**/functions/fish_prompt.fish
-                    set prompt (string replace $__fish_config_dir/corals/ '' $prompt)
-                    set prompt (string replace /functions/fish_prompt.fish '' $prompt)
-                    echo $prompt
-                end
+                reef_list_themes
                 return
             end
-            set -l chosen $__fish_config_dir/corals/$argv/functions/fish_prompt.fish
+
+            for prompt in $__fish_config_dir/corals/$argv/functions/{fish_prompt,fish_right_prompt}.fish
+            end
+
             if test -f $chosen
                 ln -sf $chosen $prompt_file
                 source $prompt_file
