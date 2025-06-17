@@ -4,7 +4,15 @@ function __reef_list_corals
     end
 end
 
-set -l __reef_commands install add rm remove up update list
+function __reef_list_themes
+    for prompt in $__fish_config_dir/corals/**/functions/fish_prompt.fish
+        set prompt (string replace $__fish_config_dir/corals/ '' $prompt)
+        set prompt (string replace /functions/fish_prompt.fish '' $prompt)
+        echo $prompt
+    end
+end
+
+set -l __reef_commands install add rm remove up update list theme
 
 complete -e reef
 
@@ -46,6 +54,10 @@ complete -c reef -n "__fish_seen_subcommand_from install" -a "" \
 complete -c reef -f -n "__fish_seen_subcommand_from rm remove up update" \
     -a "(__reef_list_corals)" \
     -d "Installed coral"
+
+complete -c reef -f -n "__fish_seen_subcommand_from theme" \
+    -a "(__reef_list_themes)" \
+    -d "Installed theme"
 
 complete -c reef -f -d 'list installed corals' -a 'ls list' -n "not __fish_seen_subcommand_from $__reef_commands"
 complete -c reef -f -n '__fish_seen_subcommand_from ls list version'

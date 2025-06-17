@@ -16,7 +16,7 @@ function reef -d 'package manager for fish'
             end
             for repo in $argv
                 set -l dest (string replace -r '^.*(:|/)([^/]*)/([^/]*)$' '$2/$3' $repo)
-                set path $__fish_config_dir/corals/$dest
+                set path (string replace -r '.git$' '' $__fish_config_dir/corals/$dest)
 
                 if not string match -rq '^(https?://|\w+@)' -- "$repo"
                     set repo https://github.com/$repo
@@ -57,6 +57,29 @@ function reef -d 'package manager for fish'
             source $__fish_config_dir/corals/**/reef/functions/fish_prompt.fish
             funcsave -q fish_prompt
             funcsave -q fish_right_prompt 2>/dev/null
+        case theme
+            set prompt_file $__fish_config_dir/functions/fish_prompt.fish
+            if test -f $prompt_file && ! test -L $prompt_file
+                echo 🪸🐟 theres a fish_prompt already. backup and delete first if you want to set a theme
+                return 1
+            end
+            if ! [ $argv[1] ]
+                for prompt in $__fish_config_dir/corals/**/functions/fish_prompt.fish
+                    set prompt (string replace $__fish_config_dir/corals/ '' $prompt)
+                    set prompt (string replace /functions/fish_prompt.fish '' $prompt)
+                    echo $prompt
+                end
+                return
+            end
+            set -l chosen $__fish_config_dir/corals/$argv/functions/fish_prompt.fish
+            if test -f $chosen
+                ln -sf $chosen $prompt_file
+                source $prompt_file
+                echo 🪸🐟 set
+            else
+                echo 🪼 cant find that theme
+                return 1
+            end
         case rm remove
             for coral in $argv
                 set -l path "$__fish_config_dir/corals/$coral"
