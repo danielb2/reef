@@ -15,7 +15,7 @@ function reef -d 'package manager for fish'
                 return 1
             end
             for repo in $argv
-                set -l dest (string replace -r '.*://.*?\/(.*)' '$1' $repo)
+                set -l dest (string replace -r '^.*(:|/)([^/]*)/([^/]*)$' '$2/$3' $repo)
                 set path $__fish_config_dir/corals/$dest
 
                 if not string match -rq '^(https?://|\w+@)' -- "$repo"
