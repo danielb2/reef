@@ -39,6 +39,17 @@ Fisher, omf plugins, and anything following the standard `functions/`,
 `init.fish` file however, although functionality can be copied into a file in
 functions.
 
+## themes
+
+example:
+
+```
+reef add git@github.com:oh-my-fish/theme-bobthefish.git
+reef theme # to see list of themes
+reef theme bob<tab>  # tab complete to fill it in
+reef theme oh-my-fish/theme-bobthefish. # set new theme while backing up existing files
+```
+
 # notes
 - no dependency tree
 
