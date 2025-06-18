@@ -4,7 +4,7 @@ function reef -d 'package manager for fish'
 
     switch $cmd
         case version
-            echo reef 1.0.0
+            echo reef 1.1.0
         case list ls
             for coral in $__fish_config_dir/corals/*/*
                 echo (string replace -r "^$__fish_config_dir/corals/" "" $coral)
@@ -44,19 +44,6 @@ function reef -d 'package manager for fish'
         case "" help
             reef splash
             reef_show_help reef
-        case prompt
-            set -l date (date +%F)
-            path is $__fish_config_dir/functions/fish_prompt.fish
-            and cp $__fish_config_dir/functions/fish_prompt.fish{,-$date.bak}
-            path is $__fish_config_dir/functions/fish_right_prompt.fish
-            and cp $__fish_config_dir/functions/fish_right_prompt.fish{,-$date.bak}
-            function fish_prompt
-            end
-            function fish_right_prompt
-            end
-            source $__fish_config_dir/corals/**/reef/functions/fish_prompt.fish
-            funcsave -q fish_prompt
-            funcsave -q fish_right_prompt 2>/dev/null
         case theme
             # list themes
             if ! [ $argv[1] ]
@@ -71,17 +58,17 @@ function reef -d 'package manager for fish'
             end
 
             for prompt in $__fish_config_dir/corals/$argv/functions/{fish_prompt,fish_right_prompt}.fish
+                not test -f $prompt && break # if there's no such file, move on
+                set -l relative_prompt (string replace $__fish_config_dir .. $prompt)
                 set -l main (string replace /corals/$argv '' $prompt)
-                if test -f $prompt
-                    if [ $argv[1] ] && test -f $main && ! test -L $main
-                        set -l date (date +%F)
-                        path is $main
-                        and cp -v $main{,-$date.bak}
-                        echo 🪸🐟 there was a (basename $main) already. backedup it up for you
-                    end
-                    ln -sf $prompt $main
-                    source $main
+                if [ $argv[1] ] && test -f $main && ! test -L $main
+                    set -l date (date +%F)
+                    path is $main
+                    and cp -v $main{,-$date.bak}
+                    echo 🪸🐟 there was a (basename $main) already. backedup it up for you
                 end
+                ln -sf $relative_prompt $main
+                source $main
             end
         case rm remove
             for coral in $argv

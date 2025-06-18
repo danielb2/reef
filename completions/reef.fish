@@ -25,8 +25,8 @@ complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
     -d "display reef version"
 
 complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
-    -a prompt \
-    -d "use the reef supplied prompt"
+    -a theme \
+    -d "list or set new theme"
 
 complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
     -a splash \
@@ -49,7 +49,7 @@ complete -c reef -f -n "__fish_seen_subcommand_from rm remove up update" \
 
 complete -c reef -f -n "__fish_seen_subcommand_from theme" \
     -a "(reef_list_themes)" \
-    -d theme
+    -d 'set theme'
 
 complete -c reef -f -d 'list installed corals' -a 'ls list' -n "not __fish_seen_subcommand_from $__reef_commands"
 complete -c reef -f -n '__fish_seen_subcommand_from ls list version'

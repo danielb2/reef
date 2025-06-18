@@ -41,6 +41,5 @@ Fisher, omf plugins, and anything following the standard `functions/`,
 functions.
 
 # notes
-- there's no support for themes yet
 - no dependency tree
 
