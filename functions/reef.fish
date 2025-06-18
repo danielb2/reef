@@ -4,7 +4,7 @@ function reef -d 'package manager for fish'
 
     switch $cmd
         case version
-            echo reef 1.1.1
+            echo reef 1.2.0
         case list ls
             for coral in $__fish_config_dir/corals/*/*
                 echo (string replace -r "^$__fish_config_dir/corals/" "" $coral)
