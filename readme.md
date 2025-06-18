@@ -10,13 +10,12 @@ Subcommands:
   add/install   add corals
   help          this beautiful help
   ls/list       list installed corals
-  prompt        use the reef supplied prompt
   reload        reload reefs files (you probably dont need this)
   rm/remove     remove corals
   splash        show the reef splash
+  theme         list or set new theme
   up/update     update coral(s)
   version       display reef version
-
 ```
 
 # Install
