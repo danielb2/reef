@@ -58,29 +58,30 @@ function reef -d 'package manager for fish'
             funcsave -q fish_prompt
             funcsave -q fish_right_prompt 2>/dev/null
         case theme
-            set prompt_file $__fish_config_dir/functions/fish_prompt.fish
-
-            if [ $argv[1] ] && test -f $prompt_file && ! test -L $prompt_file
-                echo 🪸🐟 theres a fish_prompt already. backup and delete first if you want to set a theme
-                return 1
-            end
-
             # list themes
             if ! [ $argv[1] ]
                 reef_list_themes
                 return
             end
 
-            for prompt in $__fish_config_dir/corals/$argv/functions/{fish_prompt,fish_right_prompt}.fish
+            set -l real (ls $__fish_config_dir/corals/$argv/functions/{fish_prompt,fish_right_prompt}.fish 2>/dev/null)
+            if ! [ $real[1] ]
+                echo "🎣 alas, there's no theme to be found here"
+                return 1
             end
 
-            if test -f $chosen
-                ln -sf $chosen $prompt_file
-                source $prompt_file
-                echo 🪸🐟 set
-            else
-                echo 🪼 cant find that theme
-                return 1
+            for prompt in $__fish_config_dir/corals/$argv/functions/{fish_prompt,fish_right_prompt}.fish
+                set -l main (string replace /corals/$argv '' $prompt)
+                if test -f $prompt
+                    if [ $argv[1] ] && test -f $main && ! test -L $main
+                        set -l date (date +%F)
+                        path is $main
+                        and cp -v $main{,-$date.bak}
+                        echo 🪸🐟 there was a (basename $main) already. backedup it up for you
+                    end
+                    ln -sf $prompt $main
+                    source $main
+                end
             end
         case rm remove
             for coral in $argv

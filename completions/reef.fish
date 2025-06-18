@@ -45,11 +45,11 @@ complete -c reef -n "__fish_seen_subcommand_from install" -a "" \
 
 complete -c reef -f -n "__fish_seen_subcommand_from rm remove up update" \
     -a "(__reef_list_corals)" \
-    -d "Installed coral"
+    -d "installed coral"
 
 complete -c reef -f -n "__fish_seen_subcommand_from theme" \
     -a "(reef_list_themes)" \
-    -d "Installed theme"
+    -d theme
 
 complete -c reef -f -d 'list installed corals' -a 'ls list' -n "not __fish_seen_subcommand_from $__reef_commands"
 complete -c reef -f -n '__fish_seen_subcommand_from ls list version'
