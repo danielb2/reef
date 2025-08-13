@@ -4,7 +4,7 @@ function reef -d 'package manager for fish'
 
     switch $cmd
         case version
-            echo reef 1.2.1
+            echo reef 1.3.0
         case list ls
             for coral in $__fish_config_dir/corals/*/*
                 echo (string replace -r "^$__fish_config_dir/corals/" "" $coral)
@@ -15,18 +15,28 @@ function reef -d 'package manager for fish'
                 return 1
             end
             for repo in $argv
-                set -l dest (string replace -r '^.*(:|/)([^/]*)/([^/]*)$' '$2/$3' $repo)
+                set base (string replace -r '@[^/]+$' '' -- "$repo")
+                set tag (string match -r '@([^/]+)$' "$repo")[2]
+
+                set -l dest (string replace -r '^.*(:|/)([^/]*)/([^/]*)$' '$2/$3' $base)
                 set path (string replace -r '.git$' '' $__fish_config_dir/corals/$dest)
 
-                if not string match -rq '^(https?://|\w+@)' -- "$repo"
-                    set repo https://github.com/$repo
+                if not string match -rq '^(https?://|\w+@)' -- "$base"
+                    set base https://github.com/$base
                 end
 
                 if test -d $path
                     echo "Coral already exists: $dest"
-                else
-                    git clone --depth 1 --single-branch $repo $path || echo "Failed to clone $repo"
+                    continue
                 end
+
+                set -l clone_args --depth 1 --single-branch
+                if test -n "$ref"
+                    set clone_args -b "$ref" $clone_args
+                end
+
+                # echo git clone $clone_args -- "$base" "$path"
+                git clone $clone_args -- "$base" "$path" || echo "Failed to clone $orig"
             end
             reef reload
         case reload
