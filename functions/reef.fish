@@ -19,6 +19,7 @@ function reef -d 'package manager for fish'
                 set tag (string match -r '@([^/]+)$' "$repo")[2]
 
                 set -l dest (string replace -r '^.*(:|/)([^/]*)/([^/]*)$' '$2/$3' $base)
+                set -l name (string replace -r '^.*?([^/]*)$' '$1' $base)
                 set path (string replace -r '.git$' '' $__fish_config_dir/corals/$dest)
 
                 if not string match -rq '^(https?://|\w+@)' -- "$base"
@@ -35,8 +36,7 @@ function reef -d 'package manager for fish'
                     set clone_args -b "$ref" $clone_args
                 end
 
-                # echo git clone $clone_args -- "$base" "$path"
-                git clone $clone_args -- "$base" "$path" || echo "Failed to clone $orig"
+                git clone $clone_args -- "$base" "$path" && emit {$name}_install || echo "Failed to clone $orig"
             end
             reef reload
         case reload
@@ -84,15 +84,17 @@ function reef -d 'package manager for fish'
         case rm remove
             for coral in $argv
                 set -l path "$__fish_config_dir/corals/$coral"
+                set -l name (string replace -r '^.*?([^/]*)$' '$1' $coral)
                 if test -d $path
                     command rm -rf $path
                     echo "🪸🐟 removed coral: $coral"
+                    emit {$name}_uninstall
                 else
-                    echo 🪸🐟 (set_color red)coral not found: $coral
+                    echo 🪸🐟 (set_color red)coral not found: $coral(set_color normal)
                     return 1
                 end
             end
-        case up update
+        case up update upgrade
             set -l corals $argv
             if not [ $argv[1] ]
                 set corals $__fish_config_dir/corals/*/*
@@ -100,9 +102,10 @@ function reef -d 'package manager for fish'
             end
 
             for coral in $corals
+                set -l s_name (string replace -r '^.*?([^/]*)$' '$1' $coral)
                 set name (string replace -r "^$__fish_config_dir/corals/" "" $coral)
                 printf "%-30s " $name
-                git -C "$__fish_config_dir/corals/"$coral pull || echo "Failed to update $name"
+                git -C "$__fish_config_dir/corals/"$coral pull && emit {$s_name}_update || echo "Failed to update $name"
             end
             reef reload
         case '*'

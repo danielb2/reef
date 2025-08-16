@@ -39,6 +39,23 @@ Fisher, omf plugins, and anything following the standard `functions/`,
 `init.fish` file however, although functionality can be copied into a file in
 functions.
 
+### events
+
+just like fisher, events are emitted when plugins are installed, updated (attempted), or removed
+
+for example: for danielb2/reef, the following events will be emitted:
+
+- install: reef_install
+- update: reef_update
+- uninstall: reef_uninstall
+
+example:
+```fish
+function reef_install --on-event reef_install
+  # handle setup
+end
+```
+
 ## themes
 
 example:
