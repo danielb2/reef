@@ -12,6 +12,7 @@
 Usage: reef <subcommand> [options]
 Subcommands:
   add/install   add corals
+  fish_reload   reload the fish shell
   help          this beautiful help
   ls/list       list installed corals
   reload        reload reefs files (you probably dont need this)
@@ -73,4 +74,3 @@ reef theme oh-my-fish/theme-bobthefish. # set new theme while backing up existin
 
 # notes
 - no dependency tree
-
