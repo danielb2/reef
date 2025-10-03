@@ -23,7 +23,11 @@ function reef -d 'package manager for fish'
                 set path (string replace -r '.git$' '' $__fish_config_dir/corals/$dest)
 
                 if not string match -rq '^(https?://|\w+@)' -- "$base"
-                    set base https://github.com/$base
+                    if test -d $base
+                        set base file://github.com/$base
+                    else
+                        set base https://github.com/$base
+                    end
                 end
 
                 if test -d $path
