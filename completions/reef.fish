@@ -33,6 +33,10 @@ complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
     -d "show the reef splash"
 
 complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
+    -a fish_reload \
+    -d "reload the fish shell"
+
+complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
     -a reload \
     -d "reload reefs files (you probably dont need this)"
 
