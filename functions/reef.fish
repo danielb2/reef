@@ -1,10 +1,17 @@
+function __reef_resolve_coral
+    set -l repo $argv[1]
+    set -l base (string replace -r '@[^/]+$' '' -- "$repo")
+    string replace -r '^.*(:|/)([^/]*)/([^/]*)$' '$2/$3' $base
+end
+
 function reef -d 'package manager for fish'
     set -l cmd $argv[1]
     set -e argv[1]
+    set -l reef_plugins_file $__fish_config_dir/reef_plugins
 
     switch $cmd
         case version
-            echo reef 1.5.0
+            echo reef 1.6.0
         case ed
             $EDITOR (status current-filename)
         case fish_reload
@@ -44,7 +51,20 @@ function reef -d 'package manager for fish'
                     set clone_args -b "$ref" $clone_args
                 end
 
-                git clone $clone_args -- "$base" "$path" && emit {$name}_install || echo "Failed to clone $orig"
+                git clone $clone_args -- "$base" "$path"
+                if test $status -eq 0
+                    emit {$name}_install
+                    if test -f $reef_plugins_file
+                        set -l plugins (cat $reef_plugins_file)
+                        if not contains "$repo" $plugins
+                            echo "$repo" >> $reef_plugins_file
+                        end
+                    else
+                        echo "$repo" >> $reef_plugins_file
+                    end
+                else
+                    echo "Failed to clone $repo"
+                end
             end
             reef reload
         case reload
@@ -97,10 +117,63 @@ function reef -d 'package manager for fish'
                     command rm -rf $path
                     echo "🪸🐟 removed coral: $coral"
                     emit {$name}_uninstall
+
+                    if test -f $reef_plugins_file
+                        set -l tmp (mktemp)
+                        # Resolve input coral once
+                        set -l coral_slug (__reef_resolve_coral $coral)
+                        while read -l line
+                            set -l resolved (__reef_resolve_coral $line)
+                            if test "$resolved" != "$coral_slug"
+                                echo "$line" >> $tmp
+                            end
+                        end < $reef_plugins_file
+                        mv $tmp $reef_plugins_file
+                    end
                 else
                     echo 🪸🐟 (set_color red)coral not found: $coral(set_color normal)
                     return 1
                 end
+            end
+            reef reload
+        case sync
+            if not test -f $reef_plugins_file
+                echo "🪸🐟 no plugins file found at $reef_plugins_file"
+                echo "🪸🐟 you can create it by adding corals or manually at that path"
+                return 1
+            end
+
+            set -l desired_lines (cat $reef_plugins_file | string trim | string match -r -v '^#|^$')
+            set -l installed (reef ls)
+
+            set -l missing
+            for line in $desired_lines
+                set -l coral (__reef_resolve_coral $line)
+                if not contains $coral $installed
+                    set -a missing $line
+                end
+            end
+
+            set -l extra
+            set -l desired_corals
+            for line in $desired_lines
+                set -a desired_corals (__reef_resolve_coral $line)
+            end
+            for coral in $installed
+                if not contains $coral $desired_corals
+                    if test "$coral" = "danielb2/reef"
+                        continue
+                    end
+                    set -a extra $coral
+                end
+            end
+
+            if test -n "$missing"
+                reef add $missing
+            end
+
+            if test -n "$extra"
+                reef rm $extra
             end
         case up update upgrade
             set -l corals $argv
