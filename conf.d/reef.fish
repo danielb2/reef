@@ -39,7 +39,7 @@ function __reef_fish_plugins_rm --on-event reef_rm
     mv $tmp $corals_file
 end
 
-function __reef_on_update
+function __reef_fish_plugins_sync --on-event reef_update
     set -l corals_file $__fish_config_dir/fish_plugins
     test -f $corals_file; or return
 

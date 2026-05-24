@@ -85,7 +85,7 @@ end
 function __reef_update
     set -l corals $argv
     if not set -q argv[1]
-        functions -q __reef_on_update; and __reef_on_update
+        emit reef_update
         set corals (__reef_list)
     end
 
