@@ -4,13 +4,9 @@ function __reef_list_corals
     end
 end
 
-set -l __reef_commands install add rm remove up update list theme sync
+set -l __reef_commands install add rm remove up update list theme
 
 complete -e reef
-
-complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
-    -a sync \
-    -d "sync corals from reef_plugins file"
 
 complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
     -a "add install" \
@@ -22,7 +18,7 @@ complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
 
 complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
     -a "up update" \
-    -d "update coral(s)"
+    -d "update corals or sync from fish_plugins"
 
 complete -c reef -n "not __fish_seen_subcommand_from $__reef_commands" -f \
     -a version \
