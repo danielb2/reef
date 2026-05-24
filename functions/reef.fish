@@ -18,7 +18,7 @@ function __reef_add
     end
     for repo in $argv
         set -l expanded_repo (string replace -r '^~' "$HOME" -- "$repo")
-        
+
         # If it looks like a local path but doesn't exist, skip it early
         if string match -rq '^[~/]' -- "$repo"
             if not test -d "$expanded_repo"
@@ -112,6 +112,8 @@ function reef -d 'package manager for fish'
         case install add
             __reef_add $argv
             reef reload
+        case cd
+            cd $__fish_config_dir/corals/**/reef/
         case rm remove
             __reef_rm $argv
             reef reload
