@@ -37,12 +37,19 @@ I made this because while I like the simplicity of fisher, I don't like how
 everything is clobbered in the main fish folder. With this design, each plugin
 has it's own folder while still keeping things very simple.
 
-## compatability
+## compatibility
 
 Fisher, omf plugins, and anything following the standard `functions/`,
-`conf.d/` etc directory structre are compatible. reef will not honor any
+`conf.d/` etc directory structure are compatible. reef will not honor any
 `init.fish` file however, although functionality can be copied into a file in
 functions.
+
+### Fisher migration
+
+Reef mirrors Fisher's behavior to make switching easy:
+- It uses the standard `fish_plugins` file in your fish config directory.
+- `reef update` (with no arguments) will install missing corals, remove extras, and update existing ones—exactly like `fisher update`.
+- If you are already using Fisher, just install Reef and run `reef update` to migrate your plugins into the Reef structure.
 
 ### events
 
