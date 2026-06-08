@@ -25,7 +25,7 @@ Subcommands:
 
 # Install
 ```console
-curl -sL https://tinyurl.com/fish-reef | source && reef add danielb2/reef && reef init
+curl -sL https://tinyurl.com/fish-reef | source && reef init
 ```
 
 # reef
