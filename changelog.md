@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.1] - 2026-06-08
+
+### Added
+- **Simplified Installation**: `reef init` now automatically installs the core `danielb2/reef` coral if it is missing, reducing the installation command to a single step.
+
 ## [1.6.0] - 2026-05-24
 
 ### Added
