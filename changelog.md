@@ -5,9 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [1.6.0] - 2026-05-24
 
 ### Added
-- **Fisher Migration Support**: `reef update` now mirrors Fisher's behavior by utilizing the `fish_plugins` file.
-- **`fish_plugins` Integration**: Automatically tracks added and removed corals in `~/.config/fish/fish_plugins`.
-- **Automatic Sync**: `reef update` (without arguments) now installs missing corals, removes extras, and updates existing ones based on the `fish_plugins` file.
+- **Optional Fisher Migration Support**: `reef update` now supports Fisher's behavior by utilizing the `fish_plugins` file if it exists.
+- **`fish_plugins` Integration (Optional)**: Automatically tracks added and removed corals in `~/.config/fish/fish_plugins` only if the file is present.
+- **Automatic Sync**: When `~/.config/fish/fish_plugins` exists, `reef update` (without arguments) will install missing corals, remove extras, and update existing ones.
 - **Event Emitting**: Added events for plugin lifecycle management (`reef_add`, `reef_rm`, `reef_update`, and plugin-specific `_install`, `_uninstall`, `_update` events).
 - **Local Path Support**: Ability to add corals from local directories using absolute or relative paths.
 - **Improved Theme Handling**: Enhanced theme selection and automatic backup of existing `fish_prompt.fish` and `fish_right_prompt.fish` files.
