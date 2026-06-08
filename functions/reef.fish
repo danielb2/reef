@@ -132,6 +132,7 @@ function reef -d 'package manager for fish'
             mkdir -p "$__fish_config_dir/conf.d"
             set -l reef_path "$__fish_config_dir/corals/danielb2/reef"
             echo "source $reef_path/conf.d/reef.fish" >"$__fish_config_dir/conf.d/reef.fish"
+            reef reload
             echo 🪸🐟 initialized - ready to go
             reef splash
         case splash
